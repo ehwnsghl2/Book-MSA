@@ -1,4 +1,5 @@
 spring:
   profiles: alpha
-  message: Hello Spring ContentsService Alpha Server!!!!!
+  message: Welcome to Spring Api-02 Alpha Server#####!
+
 
