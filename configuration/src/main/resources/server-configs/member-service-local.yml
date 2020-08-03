@@ -1,0 +1,6 @@
+spring:
+  profiles: local
+  message: Hello Spring MemberService Local Server!!!!!
+
+user:
+  password: '{cipher}AQBT/e8aR9SAtf220d1VIWlgGiO4FatZuz0Wlc7AR1BuzJHHVRwAKSKyULxuNjM+z58NKbp5zPgm/KgyPpauopbOe+2BY1vgvyJgN0tyQUx4yuHvfIf9xlW2Ohclmzvm2ZS9ZPTrMB/M6/5QKAYA2G4rg7Wuzdd0ionZ0ojMuzOdE8gO1PsCjJMHx9Sui6lHOI/NikKeNqSO+Rq/BEDYM4z9Fcuu7g38Qr+3oySK4+IcmXjSPIBv8tRR3ELax/RVxsNXmwqpyYPyKu7PNG/QRCp0aGH9bG1tpXFgcE9iRUpSqlthQqDcis/TH/SPtfwpYcZE/fyF/HrqAS5br3n1Kgx6nL8fsH5X3EuR4LTlGlojKrIgcVbOR2/bQS38Isvz0hw=%'
