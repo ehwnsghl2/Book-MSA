@@ -1,0 +1,10 @@
+spring:
+  profiles: alpha
+  message: Welcome to Spring Api-02 Alpha Server#####!
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+

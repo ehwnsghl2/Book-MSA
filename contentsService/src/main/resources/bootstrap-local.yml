@@ -1,6 +1,0 @@
-spring:
-  profiles: local
-  cloud:
-    config: # 서버 환경 설정은 Config 서버에서 받아와야 하므로 Config 서버의 주소를 명시해야 합니다.
-      uri: http://localhost:9000
-      fail-fast: true # 클라이언트 서버를 시작할 때 Config 서버에서 정보를 로드할 수 없을 경우엔 서버를 실행하지 않겠다는 설정입니다.

@@ -1,0 +1,9 @@
+spring:
+  profiles: alpha
+  message: Hello Spring UserService Alpha Server@@@@@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true

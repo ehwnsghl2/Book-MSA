@@ -1,0 +1,9 @@
+spring:
+  profiles: local
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: config-service
+        enabled: true
+      #uri: http://localhost:9000
