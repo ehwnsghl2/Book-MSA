@@ -38,17 +38,4 @@ public class BookDTO {
         copyProperties(source, this);
     }
 
-    public Book toEntity() {
-        return Book.builder()
-                .title(title)
-                .description(description)
-                .author(author)
-                .publisher(publisher)
-                .isbn(isbn)
-                .classification(classification)
-                .bookStatus(bookStatus)
-                .location(location)
-                .build();
-    }
-
 }

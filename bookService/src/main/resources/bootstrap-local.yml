@@ -33,6 +33,8 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     listener:
       ack-mode: MANUAL_IMMEDIATE
+      concurrency: 3
+      poll-timeout: 5000
 
 
 logging:

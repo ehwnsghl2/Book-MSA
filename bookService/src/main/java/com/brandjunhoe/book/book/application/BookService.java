@@ -13,7 +13,9 @@ import com.brandjunhoe.book.book.domain.BookStatus;
 import com.brandjunhoe.book.book.domain.event.BookCreateChanged;
 import com.brandjunhoe.book.book.domain.event.BookDeleteChanged;
 import com.brandjunhoe.book.book.domain.event.BookUpdateChanged;
+import com.brandjunhoe.book.kafka.sub.event.StockChanged;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,8 +41,8 @@ public class BookService {
 
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public void save(BookDTO bookDTO) {
-        bookRepository.save(bookDTO.toEntity());
+    public void save(ReqBookRegistDTO registDTO) {
+        bookRepository.save(registDTO.toEntity());
     }
 
     @Transactional(readOnly = true)
@@ -67,8 +69,8 @@ public class BookService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void createBook(BookDTO bookDTO) {
-        Book book = bookRepository.save(bookDTO.toEntity());
+    public void createBook(ReqBookRegistDTO registDTO) {
+        Book book = bookRepository.save(registDTO.toEntity());
         sendNewBookCatalogEvent(book);
     }
 
@@ -85,10 +87,17 @@ public class BookService {
 
     }
 
-    @Transactional
+    /*@Transactional
     public void processChangeBookState(Long id, BookStatus bookStatus) {
         Book book = findById(id);
         book.bookStatusChanged(bookStatus);
+    }*/
+
+    @Transactional
+    @EventListener
+    public void processChangeBookState(StockChanged stockChanged) {
+        Book book = findById(stockChanged.getBookId());
+        book.bookStatusChanged(stockChanged.getBookStatus());
     }
 
     @Transactional(rollbackFor = Exception.class)

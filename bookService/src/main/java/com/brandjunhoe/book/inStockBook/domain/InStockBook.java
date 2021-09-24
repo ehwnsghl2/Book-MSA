@@ -66,4 +66,16 @@ public class InStockBook extends BaseDateEntity {
         this.deletedAt = LocalDate.now();
     }
 
+    public void update(String title, String description, String author, String publisher,
+                       Long isbn, LocalDate publicationDate, Source source) {
+
+        this.title = title;
+        this.description = description;
+        this.author = author;
+        this.publisher = publisher;
+        this.isbn = isbn;
+        this.publicationDate = publicationDate;
+        this.source = source;
+
+    }
 }

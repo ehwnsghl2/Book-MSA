@@ -41,15 +41,5 @@ public class InStockBookDTO {
         copyProperties(source, this);
     }
 
-    public InStockBook toEntity() {
-        return InStockBook.builder()
-                .title(title)
-                .description(description)
-                .author(author)
-                .publisher(publisher)
-                .isbn(isbn)
-                .source(source)
-                .build();
-    }
 
 }

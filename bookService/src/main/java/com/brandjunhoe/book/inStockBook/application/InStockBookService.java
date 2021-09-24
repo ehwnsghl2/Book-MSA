@@ -3,12 +3,15 @@ package com.brandjunhoe.book.inStockBook.application;
 import com.brandjunhoe.book.book.application.dto.BookDTO;
 import com.brandjunhoe.book.book.domain.Book;
 import com.brandjunhoe.book.book.domain.event.InStockBooDeleteEvent;
+import com.brandjunhoe.book.book.presentation.dto.ReqBookUpdateDTO;
 import com.brandjunhoe.book.common.exception.DataNotFoundException;
 import com.brandjunhoe.book.common.page.ResPageDTO;
 import com.brandjunhoe.book.common.page.TotalPageDTO;
 import com.brandjunhoe.book.inStockBook.application.dto.InStockBookDTO;
 import com.brandjunhoe.book.inStockBook.domain.InStockBook;
 import com.brandjunhoe.book.inStockBook.domain.InStockBookRepository;
+import com.brandjunhoe.book.inStockBook.presentation.dto.ReqInStockBookRegistDTO;
+import com.brandjunhoe.book.inStockBook.presentation.dto.ReqInStockBookUpdateDTO;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
@@ -36,8 +39,20 @@ public class InStockBookService {
 
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public void save(InStockBookDTO inStockBookDTO) {
+    public void save(ReqInStockBookRegistDTO inStockBookDTO) {
         inStockBookRepository.save(inStockBookDTO.toEntity());
+    }
+
+    @Transactional
+    public void update(Long id, ReqInStockBookUpdateDTO updateDTO) {
+
+        InStockBook updatedBook = findById(id);
+
+        updatedBook.update(updateDTO.getTitle(), updateDTO.getDescription(), updateDTO.getAuthor(),
+                updateDTO.getPublisher(), updateDTO.getIsbn(), updateDTO.getPublicationDate(),
+                updateDTO.getSource());
+
+
     }
 
     @Transactional(readOnly = true)
@@ -53,7 +68,7 @@ public class InStockBookService {
     }
 
     @EventListener
-    public void inStockBooDeleteEvent(InStockBooDeleteEvent event){
+    public void inStockBooDeleteEvent(InStockBooDeleteEvent event) {
         InStockBook inStockBook = findById(event.getInStockId());
         inStockBook.delete();
     }
