@@ -1,0 +1,42 @@
+spring:
+  profiles: local
+  cloud:
+    config: # 서버 환경 설정은 Config 서버에서 받아와야 하므로 Config 서버의 주소를 명시해야 합니다.
+      fail-fast: true # 클라이언트 서버를 시작할 때 Config 서버에서 정보를 로드할 수 없을 경우엔 서버를 실행하지 않겠다는 설정입니다.spring:
+      discovery:
+        service-id: config-service
+        enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:bookCatalog
+    driver-class-name: org.h2.Driver
+    username: sa
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    open-in-view: false
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092 # Kafka 클러스터에 대한 초기 연결에 사용할 호스트:포트
+      group-id: book-catalog # Consumer는 Consumer Group이 존재하기 때문에, 유일하게 식별 가능한 Consumer Group을 작성합니다.
+      auto-offset-reset: earliest # Kafka 서버에 초기 offset이 없거나, 서버에 현재 offset이 더 이상 없는 경우 수행할 작업을 작성합니다.
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
+      concurrency: 3
+      poll-timeout: 5000
+
+
+logging:
+  level:
+    root: info

@@ -18,6 +18,8 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 @Setter
 public class BookDTO {
 
+    private Long id;
+
     private String title;
 
     private String description;

@@ -1,7 +1,8 @@
 package com.brandjunhoe.book.book.application;
 
 import com.brandjunhoe.book.book.application.dto.BookDTO;
-import com.brandjunhoe.book.book.domain.event.InStockBooDeleteEvent;
+import com.brandjunhoe.book.book.domain.BookChangedType;
+import com.brandjunhoe.book.book.domain.event.*;
 import com.brandjunhoe.book.book.presentation.dto.ReqBookRegistDTO;
 import com.brandjunhoe.book.book.presentation.dto.ReqBookUpdateDTO;
 import com.brandjunhoe.book.common.exception.DataNotFoundException;
@@ -10,9 +11,6 @@ import com.brandjunhoe.book.common.page.TotalPageDTO;
 import com.brandjunhoe.book.book.domain.Book;
 import com.brandjunhoe.book.book.domain.BookRepository;
 import com.brandjunhoe.book.book.domain.BookStatus;
-import com.brandjunhoe.book.book.domain.event.BookCreateChanged;
-import com.brandjunhoe.book.book.domain.event.BookDeleteChanged;
-import com.brandjunhoe.book.book.domain.event.BookUpdateChanged;
 import com.brandjunhoe.book.kafka.sub.event.StockChanged;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -114,6 +112,31 @@ public class BookService {
         return bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
     }
 
+  /*  private void sendBookChagned(BookChangedType eventType, Book book){
+
+
+
+        if(eventType.equals(BookChangedType.NEW_BOOK) || eventType.equals(BookChangedType.UPDATE_BOOK)) {
+
+
+                    .bookId(book.getId())
+                    .title(book.getTitle())
+                    .description(book.getDescription())
+                    .author(book.getAuthor())
+                    .publicationDate(book.getPublicationDate().format(fmt))
+                    .classification(book.getClassification())
+                    .rentCnt((long) 0)
+                    .rented(!book.getBookStatus().equals(BookStatus.AVAILABLE))
+                    .build();
+
+        } else if (eventType.equals(BookChangedType.DELETE_BOOK)){
+
+        }
+
+
+
+    }*/
+
 
     public void sendNewBookCatalogEvent(Book book) {
 
@@ -152,5 +175,6 @@ public class BookService {
     public void sendBookDeleteCatalogEvent(Long bookId) {
         eventPublisher.publishEvent(new BookDeleteChanged(bookId));
     }
+
 
 }

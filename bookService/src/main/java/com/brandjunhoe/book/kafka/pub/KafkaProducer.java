@@ -1,5 +1,6 @@
 package com.brandjunhoe.book.kafka.pub;
 
+import com.brandjunhoe.book.book.domain.event.BookChanged;
 import com.brandjunhoe.book.book.domain.event.BookCreateChanged;
 import com.brandjunhoe.book.book.domain.event.BookDeleteChanged;
 import com.brandjunhoe.book.book.domain.event.BookUpdateChanged;
@@ -15,7 +16,9 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 public class KafkaProducer {
 
-    private static final String TOPIC_CATALOG = "book_catalog";
+    private static final String TOPIC_CATALOG_CREATE = "book_catalog_create";
+    private static final String TOPIC_CATALOG_UPDATE = "book_catalog_update";
+    private static final String TOPIC_CATALOG_DELETE = "book_catalog_delete";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
@@ -28,7 +31,7 @@ public class KafkaProducer {
     public void sendMessage(String message) {
         System.out.println("Produce message : " + message);
         // Kafka 서버로 메시지가 전송
-        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG, message);
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send("book_catalog", message);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override
@@ -44,12 +47,13 @@ public class KafkaProducer {
         });
     }
 
+
     @EventListener
     public void sendBookCreateEvent(BookCreateChanged bookCreateChanged) throws JsonProcessingException {
 
         String message = objectMapper.writeValueAsString(bookCreateChanged);
         // Kafka 서버로 메시지가 전송
-        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG, message);
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG_CREATE, message);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override
@@ -70,7 +74,7 @@ public class KafkaProducer {
 
         String message = objectMapper.writeValueAsString(bookUpdateChanged);
         // Kafka 서버로 메시지가 전송
-        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG, message);
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG_UPDATE, message);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override
@@ -91,7 +95,7 @@ public class KafkaProducer {
 
         String message = objectMapper.writeValueAsString(bookDeleteChanged);
         // Kafka 서버로 메시지가 전송
-        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG, message);
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC_CATALOG_DELETE, message);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override
