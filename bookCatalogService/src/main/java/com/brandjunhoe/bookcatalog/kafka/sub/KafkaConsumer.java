@@ -8,11 +8,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class KafkaConsumer {
+
+    private static final String TOPIC_CATALOG_CREATE = "topic_catalog_create";
+    private static final String TOPIC_CATALOG_UPDATE = "topic_catalog_update";
+    private static final String TOPIC_CATALOG_DELETE = "topic_catalog_delete";
+    private static final String TOPIC_CATALOG_RENT = "topic_catalog_rent";
+    private static final String TOPIC_CATALOG_RETURN = "topic_catalog_return";
 
     private final ApplicationEventPublisher eventPublisher;
     private final ObjectMapper objectMapper;
@@ -23,37 +30,44 @@ public class KafkaConsumer {
     }
 
 
-    @KafkaListener(topics = "book_catalog", groupId = "book")
-    public void consume(String message/*, Acknowledgment ack*/) {
-        System.out.println("Consumed book catalog message : " + message);
-        /*try {
-            System.out.println("Recieved ping message: " + message);
+    @KafkaListener(topics = TOPIC_CATALOG_CREATE, groupId = "book_catalog")
+    public void bookCreateChanged(String message, Acknowledgment ack) {
+
+        try {
+            BookCreateChanged bookCreateChanged = objectMapper.readValue(message, BookCreateChanged.class);
+            eventPublisher.publishEvent(bookCreateChanged);
             ack.acknowledge();
         } catch (Exception e) {
             String msg = "시스템에 예상치 못한 문제가 발생했습니다";
             System.out.println("Recieved ping message: " + msg + e);
-        }*/
+        }
+
     }
 
-    @KafkaListener(topics = "topic_catalog_create", groupId = "book_catalog")
-    public void bookCreateChanged(String message/*, Acknowledgment ack*/) throws JsonProcessingException {
-        BookCreateChanged bookCreateChanged = objectMapper.readValue(message, BookCreateChanged.class);
+    @KafkaListener(topics = TOPIC_CATALOG_UPDATE, groupId = "book_catalog")
+    public void bookUpdateChanged(String message, Acknowledgment ack) {
+        try {
+            BookUpdateChanged bookUpdateChanged = objectMapper.readValue(message, BookUpdateChanged.class);
+            eventPublisher.publishEvent(bookUpdateChanged);
+            ack.acknowledge();
+        } catch (Exception e) {
+            String msg = "시스템에 예상치 못한 문제가 발생했습니다";
+            System.out.println("Recieved ping message: " + msg + e);
+        }
 
-        eventPublisher.publishEvent(bookCreateChanged);
     }
 
-    @KafkaListener(topics = "topic_catalog_update", groupId = "book_catalog")
-    public void bookUpdateChanged(String message/*, Acknowledgment ack*/) throws JsonProcessingException {
-        BookUpdateChanged bookUpdateChanged = objectMapper.readValue(message, BookUpdateChanged.class);
+    @KafkaListener(topics = TOPIC_CATALOG_DELETE, groupId = "book_catalog")
+    public void bookDeleteChanged(String message, Acknowledgment ack) {
+        try {
+            BookDeleteChanged bookDeleteChanged = objectMapper.readValue(message, BookDeleteChanged.class);
+            eventPublisher.publishEvent(bookDeleteChanged);
+            ack.acknowledge();
+        } catch (Exception e) {
+            String msg = "시스템에 예상치 못한 문제가 발생했습니다";
+            System.out.println("Recieved ping message: " + msg + e);
+        }
 
-        eventPublisher.publishEvent(bookUpdateChanged);
-    }
-
-    @KafkaListener(topics = "topic_catalog_delete", groupId = "book_catalog")
-    public void bookDeleteChanged(String message/*, Acknowledgment ack*/) throws JsonProcessingException {
-        BookDeleteChanged bookDeleteChanged = objectMapper.readValue(message, BookDeleteChanged.class);
-
-        eventPublisher.publishEvent(bookDeleteChanged);
     }
 
 }
