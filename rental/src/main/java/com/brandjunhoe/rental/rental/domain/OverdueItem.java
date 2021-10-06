@@ -43,20 +43,10 @@ public class OverdueItem {
         this.dueDate = dueDate;
     }
 
-    public void updateBookId(Long bookId) {
+    public void update(Long bookId, LocalDate dueDate, String bookTitle){
         this.bookId = bookId;
-    }
-
-    public void updateReturnedDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public void updateBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
-    }
-
-    public void updateRental(Rental rental) {
-        this.rental = rental;
     }
 
 

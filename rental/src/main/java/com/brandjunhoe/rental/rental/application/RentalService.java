@@ -8,6 +8,7 @@ import com.brandjunhoe.rental.rental.application.dto.RentalDTO;
 import com.brandjunhoe.rental.rental.domain.Rental;
 import com.brandjunhoe.rental.rental.domain.RentalRepository;
 import com.brandjunhoe.rental.rental.domain.enums.BookStatus;
+import com.brandjunhoe.rental.rental.domain.enums.RentalStatus;
 import com.brandjunhoe.rental.rental.domain.event.BookRentEvent;
 import com.brandjunhoe.rental.rental.domain.event.BookReturnEvent;
 import com.brandjunhoe.rental.rental.domain.event.BookSavePointsEvent;
@@ -75,7 +76,7 @@ public class RentalService {
 
     @EventListener
     public void createRental(CreateRentalEvent userIdCreated) {
-        rentalRepository.save(new Rental(userIdCreated.getUserId()));
+        rentalRepository.save(new Rental(userIdCreated.getUserId(), RentalStatus.RENT_AVAILABLE, 0));
     }
 
     /**
@@ -166,7 +167,7 @@ public class RentalService {
      */
     @Transactional
     public void releaseOverdue(Long userId) {
-        Rental rental = rentalRepository.findByUserIdAndDeletedAtIsNull(userId).get();
+        Rental rental = rentalRepository.findByUserIdAndDeletedAtIsNull(userId).orElseThrow(() -> new IllegalArgumentException());
         rental.releaseOverdue();
     }
 

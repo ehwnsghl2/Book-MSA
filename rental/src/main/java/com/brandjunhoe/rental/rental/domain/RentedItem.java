@@ -37,28 +37,28 @@ public class RentedItem {
     @JsonIgnoreProperties("rentedItems")
     private Rental rental;
 
-    @Builder
+    /*@Builder
     public RentedItem(Long bookId, String bookTitle, LocalDate rentedDate) {
         this.bookId = bookId;
         this.bookTitle = bookTitle;
         this.rentedDate = rentedDate;
         this.dueDate = rentedDate.plusWeeks(2);
-    }
+    }*/
 
-    public void updateBookId(Long bookId) {
+    @Builder
+    public RentedItem(Long bookId, LocalDate rentedDate, LocalDate dueDate, String bookTitle, Long rentalId) {
         this.bookId = bookId;
-    }
-
-    public void updateRentedDate(LocalDate rentedDate) {
         this.rentedDate = rentedDate;
-    }
-
-    public void updateBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-
-    public void updateDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+        this.bookTitle = bookTitle;
+        this.rental = new Rental(rentalId);
+    }
+
+    public void update(Long bookId, LocalDate rentedDate, LocalDate dueDate, String bookTitle){
+        this.bookId = bookId;
+        this.rentedDate = rentedDate;
+        this.dueDate = dueDate;
+        this.bookTitle = bookTitle;
     }
 
 }

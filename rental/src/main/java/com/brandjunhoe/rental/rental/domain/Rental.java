@@ -6,7 +6,6 @@ import com.brandjunhoe.rental.rental.domain.enums.RentalStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -42,8 +41,8 @@ public class Rental extends BaseDateEntity {
 
     private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     //고아 객체 제거 -> rental에서 컬렉션의 객체 삭제시, 해당 컬렉션의 entity삭제
+    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RentedItem> rentedItems = new HashSet<>();
 
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -60,9 +59,13 @@ public class Rental extends BaseDateEntity {
         this.lateFee = lateFee;
     }
 
-    public Rental(Long userId) {
-        createRental(userId);
+    public Rental(Long id) {
+        this.id = id;
     }
+
+    /*public Rental Rental(Long userId) {
+        return createRental(userId);
+    }*/
 
     public void update(Long userId, RentalStatus rentalStatus, int lateFee) {
         this.userId = userId;
@@ -75,14 +78,14 @@ public class Rental extends BaseDateEntity {
     }
 
 
-    public Rental createRental(Long userId) {
+    /*public Rental createRental(Long userId) {
         return Rental.builder()
                 .userId(userId)
                 .rentalStatus(RentalStatus.RENT_AVAILABLE)
                 .lateFee(0)
                 .build();
 
-    }
+    }*/
 
     // 대출 가능 여부 체크
     public void checkRentalAvailable() {

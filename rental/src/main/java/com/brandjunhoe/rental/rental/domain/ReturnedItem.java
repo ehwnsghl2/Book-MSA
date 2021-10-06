@@ -3,6 +3,7 @@ package com.brandjunhoe.rental.rental.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "returned_item")
+@NoArgsConstructor
 public class ReturnedItem {
 
     @Id
@@ -34,6 +36,16 @@ public class ReturnedItem {
     @JsonIgnoreProperties("overdueItems")
     private Rental rental;
 
+
+
+    @Builder
+    public ReturnedItem(Long bookId, String bookTitle, LocalDate returnedDate, Long rentalId) {
+        this.bookId = bookId;
+        this.bookTitle = bookTitle;
+        this.returnedDate = returnedDate;
+        this.rental = new Rental(rentalId);
+    }
+
     @Builder
     public ReturnedItem(Long bookId, String bookTitle, LocalDate returnedDate) {
         this.bookId = bookId;
@@ -41,20 +53,10 @@ public class ReturnedItem {
         this.returnedDate = returnedDate;
     }
 
-    public void updateBookId(Long bookId) {
+    public void update(Long bookId, LocalDate returnedDate, String bookTitle){
         this.bookId = bookId;
-    }
-
-    public void updateDueDate(LocalDate returnedDate) {
         this.returnedDate = returnedDate;
-    }
-
-    public void updateBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
-    }
-
-    public void updateRental(Rental rental) {
-        this.rental = rental;
     }
 
 

@@ -1,10 +1,10 @@
 package com.brandjunhoe.bookcatalog.common.handler;
 
-import com.brandjunhoe.book.common.exception.BadRequestException;
-import com.brandjunhoe.book.common.exception.DataNotFoundException;
-import com.brandjunhoe.book.common.exception.TokenExpiredException;
-import com.brandjunhoe.book.common.exception.UnauthorizedException;
-import com.brandjunhoe.book.common.response.ApiResponse;
+import com.brandjunhoe.bookcatalog.common.exception.BadRequestException;
+import com.brandjunhoe.bookcatalog.common.exception.DataNotFoundException;
+import com.brandjunhoe.bookcatalog.common.exception.TokenExpiredException;
+import com.brandjunhoe.bookcatalog.common.exception.UnauthorizedException;
+import com.brandjunhoe.bookcatalog.common.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
