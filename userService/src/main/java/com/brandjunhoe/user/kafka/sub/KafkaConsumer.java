@@ -1,4 +1,4 @@
-package com.brandjunhoe.user.member.kafka.sub;
+package com.brandjunhoe.user.kafka.sub;
 
 
 import org.springframework.kafka.annotation.KafkaListener;

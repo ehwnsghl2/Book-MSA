@@ -34,3 +34,14 @@ spring:
      listener:
        ack-mode: MANUAL_IMMEDIATE
 
+feign:
+  client:config:
+      default:
+
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: BASIC
+
+logging:
+  level:
+    root: info
