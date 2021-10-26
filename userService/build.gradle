@@ -14,7 +14,7 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2020.0.3")
+    set('springCloudVersion', "Hoxton.SR6")
 }
 
 dependencies {
@@ -22,31 +22,35 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 
-    // mysql
-    implementation('org.springframework.boot:spring-boot-starter-jdbc')
-    runtimeOnly('mysql:mysql-connector-java')
+    runtimeOnly("com.h2database:h2")
 
-    //lombok
+    // rest
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    //h2
-    runtimeOnly 'com.h2database:h2'
-    //jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // Hibernate Types 52
-    compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.9.12'
+    // Hibernate
+    implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.9.12'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.5.Final'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: '6.1.5.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.2.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.21.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.10.Final'
 
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
 
-    // feign
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+
 }
 
 dependencyManagement {

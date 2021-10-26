@@ -59,7 +59,7 @@ public class User extends BaseDateEntity {
     private int point;
 
     @ManyToMany
-    @JoinTable(name = "authority", // 조인 테이블명
+    @JoinTable(name = "user_authority", // 조인 테이블명
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, // 현재 엔티티를 참조하는 외래키
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     // 반대 방향 엔티티를 참조하는 외래키
@@ -69,7 +69,7 @@ public class User extends BaseDateEntity {
         this.point += point;
     }
 
-    public void userPoints(int point) {
+    public void usePoints(int point) {
         if (this.point >= point) {
             this.point -= point;
         } else {

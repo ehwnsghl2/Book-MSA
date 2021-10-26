@@ -62,15 +62,15 @@ public class InStockBookController {
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse deleteBook(@PathVariable @Valid @Min(value = 1) Long id) {
+    public ApiResponse deleteInStockBook(@PathVariable @Valid @Min(value = 1) Long id) {
 
         inStockBookService.delete(id);
 
         return new ApiResponse();
     }
 
-    @GetMapping
-    public ApiResponse<ResPageDTO> getInStockBookByTitle(@RequestParam @Valid @NotBlank String title,
+    @GetMapping("title/{title}")
+    public ApiResponse<ResPageDTO> getInStockBookByTitle(@PathVariable @Valid @NotBlank String title,
                                                          ReqPageDTO requestPage) {
 
         ResPageDTO pageDTO = inStockBookService.findByTitle(title, requestPage.getPageable());

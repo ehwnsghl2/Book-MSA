@@ -1,10 +1,10 @@
 package com.brandjunhoe.user.common.handler;
 
-import com.brandjunhoe.rental.common.exception.BadRequestException;
-import com.brandjunhoe.rental.common.exception.DataNotFoundException;
-import com.brandjunhoe.rental.common.exception.TokenExpiredException;
-import com.brandjunhoe.rental.common.exception.UnauthorizedException;
-import com.brandjunhoe.rental.common.response.ApiResponse;
+import com.brandjunhoe.user.common.exception.BadRequestException;
+import com.brandjunhoe.user.common.exception.DataNotFoundException;
+import com.brandjunhoe.user.common.exception.TokenExpiredException;
+import com.brandjunhoe.user.common.exception.UnauthorizedException;
+import com.brandjunhoe.user.common.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
