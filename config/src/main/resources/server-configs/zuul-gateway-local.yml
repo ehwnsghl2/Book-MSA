@@ -4,7 +4,7 @@ zuul:
   routes:
     member:
       stripPrefix: false
-      path: /v1/user/**
+      path: /api/v1/user/**
       serviceId: user-service
     pay:
       stripPrefix: false
@@ -14,3 +14,4 @@ zuul:
       stripPrefix: false
       path: /v1/**
       serviceId: book-service
+

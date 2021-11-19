@@ -1,12 +1,23 @@
 server:
   port: 8084
+
 spring:
   profiles:
     active: local
   application:
     name: user-service
+
 management:
   endpoints:
     web:
       exposure:
         include: info, refresh
+
+security:
+  oauth2:
+    client:
+      id: auth_id
+      client-secret: auth_secret
+    resource:
+      jwt:
+        key-value: jwt_secret_key

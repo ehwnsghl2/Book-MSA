@@ -1,12 +1,27 @@
 server:
   port: 9100
+
 spring:
   application:
     name: zuul-gateway
   profiles:
     active: local
+
 management:
   endpoints:
     web:
       exposure:
         include: refresh
+
+security:
+  oauth2:
+    client:
+      id: auth_id
+      client-secret: auth_secret
+    resource:
+      jwt:
+        key-value: jwt_secret_key
+
+zuul:
+  sensitive-headers: Cookie,Set-Cookie  # Zuul 이 하위 서비스에 전파하지 않는 헤더 차단 목록 (디폴트는 Cookie, Set-Cookie, Authorization)
+  add-proxy-headers: true
